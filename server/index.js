@@ -6,6 +6,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+const router = require('./router');
+
 io.on('connect', (socket) => {
   socket.on('join', ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
@@ -40,13 +42,11 @@ io.on('connect', (socket) => {
   })
 });
 
+app.use(router);
+
 app.use(express.json());
 
 const PORT = 5000;
-
-app.get('/', (req, res) => {
-  res.json('Server is running');
-})
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
