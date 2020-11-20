@@ -7,6 +7,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const router = require('./router');
+const { addUser } = require('./users');
 
 io.on('connect', (socket) => {
   socket.on('join', ({ name, room }, callback) => {
